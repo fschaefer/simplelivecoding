@@ -1,0 +1,9 @@
+
+# Mac-a-ty-mac
+.DS_Store
+
+# hiding some temp files 'n other clutter
+distributions/
+bin/
+distribution/
+make.sh

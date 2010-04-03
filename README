@@ -1,0 +1,17 @@
+
+    =======================================================================
+    
+        S I M P L E   L I V E   C O D I N G
+        A Processing tool that allows to "live watch" a sketch.
+        
+    =======================================================================
+    
+        Sketches written in basic mode can be run and watched live
+        in the PDE allowing for a sort of live-coding workflow.
+        
+    =======================================================================
+    
+        This tool is based upon the idea and demo by Florian Schäfer
+        posted to the Processing Discourse years ago: http://bit.ly/bED9u1
+        
+    =======================================================================
