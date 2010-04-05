@@ -95,15 +95,18 @@
 		<mkdir dir="${dist}" />
 		<mkdir dir="${dist}/tool" />
 		
-		<!--mkdir dir="${dist}/examples" /-->
-		<jar jarfile="${dist}/tool/${jarFile}" basedir="${bin}" />
+		<jar jarfile="tool/${jarFile}" basedir="${bin}" />
 		
-		<copy todir="${dist}/tool/">
+		<copy todir="tool/">
 			<fileset dir="lib" />
 		</copy>
 		
-		<copy todir="${dist}/Examples">
-			<fileset dir="Examples" />
+		<copy toDir="${dist}/tool/">
+			<fileset dir="tool" />
+		</copy>
+		
+		<copy todir="${dist}/examples">
+			<fileset dir="examples" />
 		</copy>
 		
 		<copy todir="${dist}/src">
@@ -118,8 +121,6 @@
 			<fileset dir="resources" />
 		</copy>
 		
-		<!--antcall target="makeJavadoc"/-->
-		
 		<!-- copy the distro to Processing's tools inside sketchbook -->
 		<delete dir="${sketchbook}/tools/${toolName}" />
 		<mkdir dir="${sketchbook}/tools/${toolName}" />
@@ -128,35 +129,16 @@
 		</copy>
 		
 		<!-- zip the distribution of the tool -->
-		<zip destfile="${dist}/${toolName}.zip" basedir="${dist}" excludes="**/_DS.Store" />
+		<zip destfile="distributions/${toolName}_${versionNumber}.zip"
+			 basedir="${dist}" excludes="**/.DS_Store" />
 		
-		<move file="${dist}/${toolName}.zip" toFile="${toolName}_${versionNumber}.zip" />
+		<!-- cleanup -->
 		
 		<delete dir="${bin}" />
 		<delete dir="${dist}" />
 		<delete dir="${javadoc}" />
 		<delete dir="${src_versioned}" />
 	
-	</target>
-	
-	
-	<!-- generate and dist javadocs -->
-	
-	
-	<target name="makeJavadoc">
-		<!-- create the java documentation of the tool -->
-		<mkdir dir="${javadoc}" />
-		<javadoc bottom="processing tool ${toolName} by ${author}. ${copyright}" classpathref="library-classpath" destdir="${javadoc}" verbose="false" stylesheetfile="resources/stylesheet.css" doctitle="Javadocs: ${toolName}" public="true" version="false" windowtitle="Javadocs: ${toolName}">
-			<taglet name="ExampleTaglet" path="resources/code" />
-			<fileset dir="${src}" defaultexcludes="yes">
-				<!-- #### (9) add packages to be added to documentation. #### -->
-				<include name="**/*" />
-			</fileset>
-		</javadoc>
-		<mkdir dir="${dist}/documentation" />
-		<copy todir="${dist}/documentation">
-			<fileset dir="${javadoc}" />
-		</copy>
 	</target>
 	
 	
@@ -183,24 +165,6 @@
 					   replace="${versionNumber}" flags="g" />
 		<replaceregexp file="${file}" match="##date##"
 					   replace="${date}" flags="g" />
-	</target>
-	
-	
-	<!-- parsing the examples folder -->
-	
-	
-	<target name="processExamples">
-		<dirset id="examples.contents" dir="examples" excludes="*/*" />
-		<property name="examples.list" refid="examples.contents" />
-		<foreach list="${examples.list}" target="addExamples"
-				 param="exampleDir" delimiter=";"></foreach>
-	</target>
-	
-	
-	<target name="addExamples">
-		<replaceregexp file="${dist}/web/index.html" match="(##examples##)"
-					   replace="&lt;li&gt;&lt;a href=&quot;examples/${exampleDir}/${exampleDir}.pde&quot;&gt;${exampleDir}&lt;/a&gt;&lt;/li&gt; \1"
-					   flags="g" />
 	</target>
   
 </project>

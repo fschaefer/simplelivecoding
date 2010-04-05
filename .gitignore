@@ -3,7 +3,7 @@
 .DS_Store
 
 # hiding some temp files 'n other clutter
-distributions/
 bin/
 distribution/
+distributions/
 make.sh

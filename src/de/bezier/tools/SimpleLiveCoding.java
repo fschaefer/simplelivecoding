@@ -62,10 +62,10 @@ implements Tool, WindowListener
     	return "Simple Live Coding";
     }
 
-	public void init ( Editor _e )
-	{
-		editor = _e;
-	}
+    public void init ( Editor _e )
+    {
+	editor = _e;
+    }
 
     public void run ()
     {
