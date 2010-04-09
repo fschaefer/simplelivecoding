@@ -9,8 +9,8 @@
 size( 200, 200 );
 
 // try this once the window is visible
-// live.setTitleBarVisible( false );
-live.setWindowPosition( 100, 122 );
+// Live.setTitleBarVisible( false );
+Live.setWindowPosition( 100, 122 );
     
 background( 0x09FFFFFF );
 fill( 0x99112233 );

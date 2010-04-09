@@ -15,10 +15,10 @@ int wh = 1 + abs(mouseX-(width/2) + mouseY-(height/2)) / 4;
 int wh2 = wh/2;
 
 // set or get values
-float x = live.getFloat("x", width/2);
-float y = live.getFloat("y", height/2);
-float xDir = live.getFloat("xDir", random(1,2));
-float yDir = live.getFloat("yDir", random(1,2));
+float x = Live.getFloat("x", width/2);
+float y = Live.getFloat("y", height/2);
+float xDir = Live.getFloat("xDir", random(1,2));
+float yDir = Live.getFloat("yDir", random(1,2));
 
 x += xDir;
 if ( x >= width-wh2 || x <= wh2 )  xDir *= -1;
@@ -30,8 +30,8 @@ fill( 255 );
 ellipse( x, y, wh, wh );
 
 // store values for next frame
-live.set("x",x);
-live.set("y",y);
-live.set("xDir",xDir);
-live.set("yDir",yDir);
+Live.set("x",x);
+Live.set("y",y);
+Live.set("xDir",xDir);
+Live.set("yDir",yDir);
 
