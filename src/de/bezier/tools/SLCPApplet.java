@@ -62,6 +62,8 @@ extends PApplet
         String s1 = "";
         try
         {
+	    // Fast MD5 by Timothy W Macinta
+	    // http://www.twmacinta.com/myjava/fast_md5.php
             MD5 md5 = new MD5();
             md5.Update(s);
             s1 = md5.asHex();

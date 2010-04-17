@@ -8,7 +8,7 @@
  *
  *	<p>
  *	This tool is partly based on the "Processing Interpreter Demo" by
- *	Florian Schäfer (aka "FloHimself", florian.schaefer@gmail.com):
+ *	Florian Sch√§fer (aka "FloHimself", florian.schaefer@gmail.com):
  *	<ul><li>
  *	<a href="http://bit.ly/bED9u1">Live Code post by FloHimself</a>
  *	</li><li>
