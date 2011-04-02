@@ -35,12 +35,12 @@ public class SLCInterpreter
         }
     }
 
-    public boolean call(String s)
+    public boolean call( String s )
     {
         s = preproc.process(s);
         
-        if(s == null || s.equals(""))
-            return false;
+        if ( s == null || s.equals("") ) return false;
+			
         init();
         
         try

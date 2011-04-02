@@ -99,9 +99,10 @@ extends PApplet
         
         if ( !oldHash.equals(newHash) && !bailedHash.equals(newHash) && !editor.getSketch().isModified() )
         {
-            if ( !interpreter.call(currentCode) )
+            if ( !interpreter.call( currentCode + "" ) )
             {
                 bailedHash = newHash;
+				//noLoop();
             } 
             else
             {
@@ -112,7 +113,10 @@ extends PApplet
         } 
         else
         {
-            interpreter.call(lastCode);
+            if ( !interpreter.call( lastCode + "" ) ) {
+				//System.err.println( "SLC stopped." );
+				//noLoop();
+			}
         }
     }
     
@@ -271,7 +275,8 @@ extends PApplet
 		{
 			barVisible = barVisible;
 		
-			if ( barVisible != titleBarVisible && frame != null && frame.isVisible() && frame.isDisplayable() )
+			if ( barVisible != titleBarVisible && frame != null && 
+				 frame.isVisible() && frame.isDisplayable() )
 			{
 				frame.removeWindowListener(tool);
 				

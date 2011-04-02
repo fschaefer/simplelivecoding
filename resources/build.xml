@@ -2,15 +2,17 @@
 
 	<description>
 		Simple Live Coding Tool build file.
+		http://github.com/fjenett/simplelivecoding
 	</description>
 	
-	<property name="author" 	value="Florian Jenett" />
-	<property name="copyright" 	value="(c) 2008 - 2009" />
-	<property name="toolName" 	value="SimpleLiveCoding" />
+	<property name="author" 		value="Florian Jenett" />
+	<property name="copyright" 		value="(c) 2008 - 2011" />
+	<property name="toolName" 		value="SimpleLiveCoding" />
 	<property name="versionNumber"  value="0.0.5" />
-	<property name="yourLink" 	value="http://www.bezier.de/" />
-	<property name="sketchbook" 	location="/Users/fjenett/Documents/Processing" />
-	<property name="processing"	location="/Applications/Processing.app/Contents/Resources/Java/" />
+	<property name="yourLink" 		value="http://www.bezier.de/" />
+	<property name="sketchbook" 	location="/Users/fjenett/Documents/Processing" />                   
+	<property name="processing"		location="/Applications/Processing.app/Contents/Resources/Java/" />  
+	<property name="processing-debug" location="/Users/fjenett/Repos/processing-new/processing-0191/build/macosx/work/Processing.app/Contents/Resources/Java/" /> 
 	<property name="javaVersion" 	value="1.5" />
   
 	<property name="libraryClasspath" location="${processing}"/>
@@ -20,16 +22,15 @@
 			<include name="pde.jar" />
 			<include name="antlr.jar" />
 		</fileset>
-		<!-- any addiotional files you need to build against -->
+		<!-- any addiotional files we need -->
 		<fileset dir="lib">
-			<include name="bsh-2.0b4.jar" />
-			<include name="twmacinta.jar" />
+			<include name="bsh-2.0b4.jar" /><!-- beanshell -->
+			<include name="twmacinta.jar" /><!-- fast md5 -->
 		</fileset>
 	</path>
   
   
 	<!-- no changes or adjustments required below -->
-  
   
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
@@ -143,7 +144,6 @@
 	
 	
 	<!-- parsing the source files adding version, date -->
-	
 	
 	<target name="versionSources">
 		<mkdir dir="${src_versioned}" />
