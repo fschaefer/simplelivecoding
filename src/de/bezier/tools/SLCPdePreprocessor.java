@@ -15,8 +15,10 @@ import processing.app.Preferences;
 import processing.app.Sketch;
 //import processing.app.SketchException;
 
-import processing.app.preproc.*;
-import processing.app.debug.*;
+import processing.mode.java.*;
+import processing.mode.java.preproc.*;
+import processing.mode.java.runner.*;
+//import processing.app.debug.*;
 
 import java.io.*;
 import java.util.regex.Pattern;
@@ -34,18 +36,21 @@ public class SLCPdePreprocessor
     
     public String process( String s )
     {
-		s = Sketch.scrubComments( s );
+		s = JavaBuild.scrubComments( s );
 		//System.out.println( s );
         
 		StringWriter writer = new StringWriter();
 		PdePreprocessor preproc = new PdePreprocessor("slcSketchName",4); /*sketchName, tabSize*/
 		preproc.setMode( PdePreprocessor.Mode.JAVA );
 		try {
-			PreprocessResult result = preproc.write(writer, s, null);
+			PreprocessorResult result = preproc.write(writer, s, null);
 		/*} catch (SketchException se) {
 			se.printStackTrace();*/
-		} catch ( RunnerException re ) {
+		/*} catch ( RunnerException re ) {
 			re.printStackTrace();
+			return null;*/
+		} catch ( processing.app.SketchException se ) {
+			se.printStackTrace();
 			return null;
 		} catch (RecognitionException re) {
 			re.printStackTrace();
