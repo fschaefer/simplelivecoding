@@ -8,7 +8,7 @@
 	<property name="author" 		value="Florian Jenett" />
 	<property name="copyright" 		value="(c) 2008 - 2011" />
 	<property name="toolName" 		value="SimpleLiveCoding" />
-	<property name="versionNumber"  value="0.0.5" />
+	<property name="versionNumber"  value="0.0.6" />
 	<property name="yourLink" 		value="http://www.bezier.de/" />
 	<property name="sketchbook" 	location="/Users/fjenett/Documents/Processing" />                   
 	<property name="processing"		location="/Applications/Processing.app/Contents/Resources/Java/" />  
