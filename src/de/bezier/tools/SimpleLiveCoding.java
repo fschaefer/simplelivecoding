@@ -69,6 +69,14 @@ implements Tool, WindowListener
 
     public void run ()
     {
+		if ( editor.getMode().getClass() != processing.mode.java.JavaMode.class )
+		{
+			Base.showError( "Error",
+						    "This tool can only be used with Java (standard) mode.",
+						    null );
+			return;
+		}
+		
         startupmsg = true;
         running = false;
         
