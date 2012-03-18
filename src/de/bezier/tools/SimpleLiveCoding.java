@@ -50,6 +50,7 @@ implements Tool, WindowListener
     boolean startupmsg;
     boolean running;
     Vector sketchHash;
+	boolean modeWarningShowed = false;
     
     Editor editor;
 
@@ -69,12 +70,13 @@ implements Tool, WindowListener
 
     public void run ()
     {
-		if ( editor.getMode().getClass() != processing.mode.java.JavaMode.class )
+		if ( editor.getMode().getClass() != processing.mode.java.JavaMode.class 
+			 && !modeWarningShowed )
 		{
-			Base.showError( "Error",
-						    "This tool can only be used with Java (standard) mode.",
-						    null );
-			return;
+			Base.showWarning( "Message",
+						      "This tool can only be used with Standard mode. Please switch!",
+						      null );
+			modeWarningShowed = true;
 		}
 		
         startupmsg = true;

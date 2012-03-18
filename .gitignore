@@ -7,3 +7,5 @@ bin/
 distribution/
 distributions/
 make.sh
+
+tools/
