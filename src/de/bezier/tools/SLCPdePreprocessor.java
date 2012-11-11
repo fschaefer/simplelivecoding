@@ -36,7 +36,6 @@ public class SLCPdePreprocessor
     public String process( String s ) throws SketchException
     {
 		//s = JavaBuild.scrubComments( s );
-		//System.out.println( s );
 
 		StringWriter writer = new StringWriter();
 
@@ -176,15 +175,25 @@ public class SLCPdePreprocessor
 		  throw new SketchException(ex.toString());
 		}
 
-		String code = writer.toString();
-		String[] lines = code.split("\n");
+		// String code = writer.toString();
+		// String[] lines = code.split("\n");
 		String codeOut = "";
-		for ( int i = 19, k = lines.length; i < k-6; i++ )
-		{
-			codeOut += lines[i] + "\n";
-		}
+		// for ( int i = 0, k = lines.length; i < k; i++ )
+		// {
+		// 	if ( lines[i].toLowerCase().indexOf(); )
+		// 	codeOut += lines[i] + "\n";
+		// }
+
+		// System.out.println( codeOut );
+		// System.out.println( result );
+
+		// codeOut = bshProcess( codeOut );
+
+		codeOut =   "public void draw () {\n"+
+				    "background( random( 200 ) );\n"+
+					"}\n";
 		
-        return bshProcess( codeOut );
+        return codeOut;
     }
 
     String bshProcess (String s)

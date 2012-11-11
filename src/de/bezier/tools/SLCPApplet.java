@@ -140,8 +140,10 @@ extends PApplet
         if ( i != width || j != height )
         {
             frame.setSize( new Dimension( i, j + ( Live.titleBarVisible ? 22 : 0 ) ) );
+            pushMatrix();
             super.size( i, j );
-            background( 125 );
+            popMatrix();
+            //background( 125 );
         }
     }
     

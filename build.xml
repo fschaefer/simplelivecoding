@@ -29,9 +29,6 @@
 		</fileset>
 	</path>
   
-  
-	<!-- no changes or adjustments required below -->
-  
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
 			<pathelement location="resources/code/ant-contrib-1.0b3.jar" />
@@ -45,16 +42,20 @@
 	<property name="javadoc" 		location="documentation" />
 	<property name="dist" 			location="distribution" />
 	
-	<!-- Create the time stamp -->
 	<tstamp>
 		<format property="date" pattern="MM/dd/yyyy" offset="0" unit="hour" />
 	</tstamp>
 
-
+	<!--- + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+		INIT
+	+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + -->
 	<target name="init">
+
+		<buildnumber file="resources/build_number"/>
+
 		<echo>
 		===========================================
-		${date}
+		${date} ${build.number}
 		===========================================
 		src path				${src}
 		bin path 				${bin}
@@ -69,10 +70,9 @@
 		
 	</target>
   
-
-	<!-- compile the tool -->
-	
-	
+	<!--- + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+		COMPILE
+	+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + -->
 	<target name="compile" depends="init" description="compile the source">
 	
 		<antcall target="versionSources" />
@@ -85,8 +85,9 @@
 	
 	</target>
 	
-	
-	<!-- build the distribution of the tool -->
+	<!--- + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+		BUILD
+	+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + -->
 	<target name="build" depends="compile" description="generate the distribution">
 		
 		<!-- delete the previous content of the ${dist} folder -->
@@ -143,9 +144,9 @@
 	
 	</target>
 	
-	
-	<!-- parsing the source files adding version, date -->
-	
+	<!--- + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+		ADD VERSION TO SOURCE FILES
+	+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + -->
 	<target name="versionSources">
 		<mkdir dir="${src_versioned}" />
 		<copy toDir="${src_versioned}">
@@ -159,11 +160,13 @@
 		<foreach list="${src.list}" param="file" target="versionSourcefile" delimiter=":" />
 	</target>
 	
-	
+	<!--- + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+		ADD VERSION TO ONE SOURCE FILE
+	+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + -->
 	<target name="versionSourcefile">
 		<echo>${file}</echo>
 		<replaceregexp file="${file}" match="##version##"
-					   replace="${versionNumber}" flags="g" />
+					   replace="${versionNumber} - ${build.number}" flags="g" />
 		<replaceregexp file="${file}" match="##date##"
 					   replace="${date}" flags="g" />
 	</target>

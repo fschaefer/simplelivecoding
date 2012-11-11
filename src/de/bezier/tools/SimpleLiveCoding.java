@@ -152,7 +152,7 @@ implements Tool, WindowListener
         {
 	    System.out.println("");
 	    System.out.println("Simple Live Coding - version "+version+" - built "+builton);
-	    System.out.println("fjenett - 2008-2011 - https://github.com/fjenett/simplelivecoding");
+	    System.out.println("fjenett - 2008-2012 - https://github.com/fjenett/simplelivecoding");
 	    System.out.println("");
 	    System.out.println("Use in \"basic programming mode\" only, see:");
 	    System.out.println("http://processing.org/reference/environment/index.html#Programming_modes");

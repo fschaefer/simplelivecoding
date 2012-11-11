@@ -38,7 +38,7 @@ public class SLCInterpreter
             bip.set("__p__", parent);
             bip.eval("importObject(__p__);");
         }
-        catch(EvalError _ex)
+        catch ( EvalError _ex )
         {
         	_ex.printStackTrace();
         }
@@ -46,7 +46,11 @@ public class SLCInterpreter
 
     public boolean call( String s )
     {
-        s = preproc.process(s);
+        try {
+            s = preproc.process(s);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
         
         if ( s == null || s.equals("") ) return false;
 			
