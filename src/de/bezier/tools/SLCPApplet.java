@@ -122,14 +122,7 @@ extends PApplet
     
     private void sketchChanged ()
     {
-		try
-		{
-			sketchPath = editor.getSketch().getPrimaryFile().getParentFile().getCanonicalPath();
-		}
-		catch ( java.io.IOException ioe )
-		{
-			// ignore?
-		}
+		sketchPath = sketch.getFolder().getAbsolutePath();
 		
 		sketch = editor.getSketch();
 		

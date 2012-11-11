@@ -11,9 +11,8 @@ package de.bezier.tools;
 import antlr.*;
 import antlr.collections.AST;
 
-import processing.app.Preferences;
-import processing.app.Sketch;
-//import processing.app.SketchException;
+import processing.app.*;
+import processing.core.*;
 
 import processing.mode.java.*;
 import processing.mode.java.preproc.*;
@@ -34,37 +33,149 @@ public class SLCPdePreprocessor
     	tool = _t;
     }
     
-    public String process( String s )
+    public String process( String s ) throws SketchException
     {
-		s = JavaBuild.scrubComments( s );
+		//s = JavaBuild.scrubComments( s );
 		//System.out.println( s );
-        
+
 		StringWriter writer = new StringWriter();
-		PdePreprocessor preproc = new PdePreprocessor("slcSketchName",4); /*sketchName, tabSize*/
-		preproc.setMode( PdePreprocessor.Mode.JAVA );
-		try {
-			PreprocessorResult result = preproc.write(writer, s, null);
-		/*} catch (SketchException se) {
-			se.printStackTrace();*/
-		/*} catch ( RunnerException re ) {
-			re.printStackTrace();
-			return null;*/
-		} catch ( processing.app.SketchException se ) {
-			se.printStackTrace();
-			return null;
-		} catch (RecognitionException re) {
-			re.printStackTrace();
-			return null;
-		} catch (TokenStreamException tse) {
-			tse.printStackTrace();
-			return null;
+
+		// PdePreprocessor preproc = new PdePreprocessor("slcSketchName",4); /*sketchName, tabSize*/
+		// preproc.setMode( PdePreprocessor.Mode.JAVA );
+		// try {
+		// 	PreprocessorResult result = preproc.write(writer, s, null);
+		// /*} catch (SketchException se) {
+		// 	se.printStackTrace();*/
+		// } catch ( RunnerException re ) {
+		// 	re.printStackTrace();
+		// 	return null;
+		// } catch ( processing.app.SketchException se ) {
+		// 	se.printStackTrace();
+		// 	return null;
+		// } catch (RecognitionException re) {
+		// 	re.printStackTrace();
+		// 	return null;
+		// } catch (TokenStreamException tse) {
+		// 	tse.printStackTrace();
+		// 	return null;
+		// }
+
+		Sketch sketch = tool.papplet.sketch;
+
+		String[] codeFolderPackages = new String[0];
+
+	    PreprocessorResult result;
+        PdePreprocessor preprocessor = new PdePreprocessor( sketch.getName());
+
+		try 
+		{
+			result = preprocessor.write( writer, s, codeFolderPackages );
+		} 
+		catch (antlr.RecognitionException re) 
+		{
+		  int errorLine = re.getLine() - 1;
+		  int errorFile = 0;
+		  errorLine -= sketch.getCode(errorFile).getPreprocOffset();
+		  String msg = re.getMessage();
+
+		  if (msg.contains("expecting RCURLY")) 
+		  {
+		    throw new SketchException("Found one too many { characters " +
+		                              "without a } to match it.",
+		                              errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  if (msg.contains("expecting LCURLY")) 
+		  {
+		    System.err.println(msg);
+		    String suffix = ".";
+		    String[] m = PApplet.match(msg, "found ('.*')");
+		    if (m != null) {
+		      suffix = ", not " + m[1] + ".";
+		    }
+		    throw new SketchException("Was expecting a { character" + suffix,
+		                               errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  if (msg.indexOf("expecting RBRACK") != -1) 
+		  {
+		    System.err.println(msg);
+		    throw new SketchException("Syntax error, " +
+		                              "maybe a missing ] character?",
+		                              errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  if (msg.indexOf("expecting SEMI") != -1) 
+		  {
+		    System.err.println(msg);
+		    throw new SketchException("Syntax error, " +
+		                              "maybe a missing semicolon?",
+		                              errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  if (msg.indexOf("expecting RPAREN") != -1) 
+		  {
+		    System.err.println(msg);
+		    throw new SketchException("Syntax error, " +
+		                              "maybe a missing right parenthesis?",
+		                              errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  if (msg.indexOf("preproc.web_colors") != -1) 
+		  {
+		    throw new SketchException("A web color (such as #ffcc00) " +
+		                              "must be six digits.",
+		                              errorFile, errorLine, re.getColumn(), false);
+		  }
+
+		  throw new SketchException(msg, errorFile,
+		                            errorLine, re.getColumn(), false);
+
+		} 
+		catch (antlr.TokenStreamRecognitionException tsre) 
+		{
+		  String mess = "^line (\\d+):(\\d+):\\s";
+
+		  String[] matches = PApplet.match(tsre.toString(), mess);
+		  
+		  if (matches != null) 
+		  {
+		    int errorLine = Integer.parseInt(matches[1]) - 1;
+		    int errorColumn = Integer.parseInt(matches[2]);
+
+		    int errorFile = 0;
+		    for (int i = 1; i < sketch.getCodeCount(); i++) {
+		      SketchCode sc = sketch.getCode(i);
+		      if (sc.isExtension("pde") &&
+		          (sc.getPreprocOffset() < errorLine)) {
+		        errorFile = i;
+		      }
+		    }
+		    errorLine -= sketch.getCode(errorFile).getPreprocOffset();
+
+		    throw new SketchException(tsre.getMessage(),
+		                              errorFile, errorLine, errorColumn);
+
+		  } 
+		  else 
+		  {
+		    String msg = tsre.toString();
+		    throw new SketchException(msg, 0, -1, -1);
+		  }
+
+		} 
+		catch (SketchException pe) 
+		{
+		  throw pe;
+
+		} 
+		catch (Exception ex) 
+		{
+		  System.err.println("Uncaught exception type:" + ex.getClass());
+		  ex.printStackTrace();
+		  throw new SketchException(ex.toString());
 		}
-		
-		//System.out.println( writer.toString() );
-		
-		// This is just a quick fix for Processing 0191,
-		// will need to be updated for upcoming version(s) that have
-		// modes (java/android/js) and separate preprocessors.
+
 		String code = writer.toString();
 		String[] lines = code.split("\n");
 		String codeOut = "";
@@ -72,7 +183,6 @@ public class SLCPdePreprocessor
 		{
 			codeOut += lines[i] + "\n";
 		}
-		//System.out.println( codeOut );
 		
         return bshProcess( codeOut );
     }

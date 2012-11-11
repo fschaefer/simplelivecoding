@@ -1,21 +1,21 @@
-<project name="SimpleLiveCoding" default="build" basedir="../">
+<project name="SimpleLiveCoding" default="build" basedir=".">
 
 	<description>
 		Simple Live Coding Tool build file.
 		http://github.com/fjenett/simplelivecoding
 	</description>
 	
-	<property name="author" 		value="Florian Jenett" />
-	<property name="copyright" 		value="(c) 2008 - 2012" />
-	<property name="toolName" 		value="SimpleLiveCoding" />
-	<property name="versionNumber"  value="0.0.7" />
-	<property name="yourLink" 		value="http://www.bezier.de/" />
-	<property name="sketchbook" 	location="/Users/fjenett/Documents/Processing" />                   
-	<property name="processing"		location="/Applications/Processing.app/Contents/Resources/Java/" />  
-	<property name="processing-debug" location="/Users/fjenett/Repos/processing-new/processing-0191/build/macosx/work/Processing.app/Contents/Resources/Java/" /> 
-	<property name="javaVersion" 	value="1.5" />
+	<property name="author" 		  value="Florian Jenett" />
+	<property name="copyright" 		  value="(c) 2008 - 2012" />
+	<property name="toolName" 		  value="SimpleLiveCoding" />
+	<property name="versionNumber"    value="0.0.7" />
+	<property name="yourLink" 		  value="http://www.bezier.de/" />
+	<property name="sketchbook" 	  location="/Users/fjenett/Documents/Processing" />                   
+	<property name="processing"		  location="/Applications/Processing.app/Contents/Resources/Java/" />  
+	<property name="processing-debug" location="/Users/fjenett/Repos/processing/processing/build/macosx/work/Processing.app/Contents/Resources/Java/" /> 
+	<property name="javaVersion" 	  value="1.5" />
   
-	<property name="libraryClasspath" location="${processing}"/>
+	<property name="libraryClasspath" location="${processing-debug}"/>
 	<path id="library-classpath">
 		<fileset dir="${libraryClasspath}">
 			<include name="core.jar" />
@@ -34,7 +34,7 @@
   
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
-			<pathelement location="./resources/code/ant-contrib-1.0b3.jar" />
+			<pathelement location="resources/code/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
 	
@@ -122,6 +122,7 @@
 			<fileset dir="resources" />
 		</copy>
 		
+		<echo>Installing into Sketchbook ...</echo>
 		<!-- copy the distro to Processing's tools inside sketchbook -->
 		<delete dir="${sketchbook}/tools/${toolName}" />
 		<mkdir dir="${sketchbook}/tools/${toolName}" />

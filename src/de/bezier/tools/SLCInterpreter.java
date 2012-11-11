@@ -15,10 +15,19 @@ import processing.app.Editor;
 
 public class SLCInterpreter
 {
-
     SLCPdePreprocessor preproc;
     SLCPApplet parent;
     Interpreter bip;
+
+    SLCInterpreter( SLCPApplet slcpapplet )
+    {
+        parent = null;
+        bip = null;
+        
+        preproc = new SLCPdePreprocessor( slcpapplet.tool );
+        parent = slcpapplet;
+        init();
+    }
 
     void init()
     {
@@ -57,15 +66,5 @@ public class SLCInterpreter
         }
         
         return true;
-    }
-
-    SLCInterpreter(SLCPApplet slcpapplet)
-    {
-    	parent = null;
-        bip = null;
-        
-        preproc = new SLCPdePreprocessor();
-        parent = slcpapplet;
-        init();
     }
 }
