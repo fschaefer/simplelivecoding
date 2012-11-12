@@ -35,7 +35,7 @@ public class SLCPdePreprocessor
     
     public String process( String s ) throws SketchException
     {
-		//s = JavaBuild.scrubComments( s );
+		s = PdePreprocessor.scrubComments( s );
 
 		StringWriter writer = new StringWriter();
 
